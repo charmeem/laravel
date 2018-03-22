@@ -26,3 +26,6 @@ Route::get('home', function() {
 Route::get('/product/{category}/{item}', function ($category, $item) {
     return "Hi, Do you want to buy a Product " . $item . " from Category " . $category;
 });
+
+// Call to my first controller
+Route::get('/post', 'PostController@index');
