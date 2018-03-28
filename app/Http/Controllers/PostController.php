@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return " Hi I just made my First controller in Laravel";
+        return " Hi I just made my First controller in Laravel and you are viewing index method ";
     }
 
     /**
@@ -46,6 +46,7 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        return " This is Show method with an id of " . $id;
     }
 
     /**
@@ -57,6 +58,7 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+        return " This is edit method of controller with an id of " .$id;
     }
 
     /**
@@ -80,5 +82,19 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     *  Contact page
+     */
+    public function contact() {
+        return view('contact');
+    }
+
+    /**
+     *  Post page
+     */
+    public function show_post($id, $name, $address) {
+        return view('post', compact('id', 'name', 'address'));
     }
 }

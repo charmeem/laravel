@@ -11,21 +11,30 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//
+//Route::get('test', function() {
+//    return " Hi brother";
+//});
+//
+//Route::get('home', function() {
+//    return view('home');
+//});
+//
+//Route::get('/product/{category}/{item}', function ($category, $item) {
+//    return "Hi, Do you want to buy a Product " . $item . " from Category " . $category;
+//});
+//
+//// Call to my first controller
+//Route::get('/post/{id}', 'PostController@index');
 
-Route::get('test', function() {
-    return " Hi brother";
-});
+// Create Routes using Resource
+Route::resource('post', 'PostController');
 
-Route::get('home', function() {
-    return view('home');
-});
+// Creating Route for Contact page
+Route::get('/contact', 'PostController@contact');
 
-Route::get('/product/{category}/{item}', function ($category, $item) {
-    return "Hi, Do you want to buy a Product " . $item . " from Category " . $category;
-});
-
-// Call to my first controller
-Route::get('/post', 'PostController@index');
+// Post page with multiple parameters and passing data to view
+Route::get('/post/{id}/{name}/{address}', 'PostController@show_post');
