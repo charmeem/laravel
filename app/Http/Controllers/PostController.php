@@ -88,7 +88,8 @@ class PostController extends Controller
      *  Contact page
      */
     public function contact() {
-        return view('contact');
+        $family = ['Munazza', 'Mahreen', 'Imama', 'Imaan', 'Zainab'];
+        return view('contact', compact('family'));
     }
 
     /**

@@ -11,10 +11,10 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-//
+Route::get('/', function () {
+    return view('welcome');
+});
+
 //Route::get('test', function() {
 //    return " Hi brother";
 //});
@@ -30,7 +30,7 @@
 //// Call to my first controller
 //Route::get('/post/{id}', 'PostController@index');
 
-// Create Routes using Resource
+// Create automatic multiple Routes using Resource- check with php artsan route:list command
 Route::resource('post', 'PostController');
 
 // Creating Route for Contact page
