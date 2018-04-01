@@ -38,3 +38,4 @@ Route::get('/contact', 'PostController@contact');
 
 // Post page with multiple parameters and passing data to view
 Route::get('/post/{id}/{name}/{address}', 'PostController@show_post');
+
