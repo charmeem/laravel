@@ -39,3 +39,33 @@ Route::get('/contact', 'PostController@contact');
 // Post page with multiple parameters and passing data to view
 Route::get('/post/{id}/{name}/{address}', 'PostController@show_post');
 
+/*
+ *  Testing raw mysql
+ */
+
+// insert operation
+//Route::get('/insert', function () {
+//
+//    DB::insert('insert into posts(title, content, is_admin) values(?, ?, ?)', ['Mufti e-mall', 'I am aiming to create online shopping mall', 1]);
+//
+//});
+
+// Read or select Operation
+//Route::get('/select', function () {
+//   $result = DB::select('select * from posts where id = ?', [1]);
+//   foreach ($result as $post) {
+//       return $post->content;
+//   }
+//});
+
+// Update operation
+//Route::get('/update', function () {
+//   $updated = DB::update('update posts set content = "Mufti e- shopping Mall" where id = ?', [3]);
+//   return $updated;
+//});
+
+// Delete operation
+Route::get('/delete', function () {
+   $deleted = DB::delete('delete from posts where id = ?', [3]);
+   return $deleted;
+});
