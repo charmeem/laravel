@@ -14,4 +14,20 @@ class Post extends Model
         'content',
         'is_admin'
     ];
+
+    //Inverse Relation- helper function to get the user for a given post
+    public function user() {
+        return $this->belongsTo('\App\User');
+    }
+
+    public function photos(){
+        return $this->morphMany('App\Photo', 'imageable');
+    }
+
+
+// Polymorphic - Mamny to many
+    public function tags() {
+        return $this->morphToMany('App\Tag', 'taggable');
+}
+
 }

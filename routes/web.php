@@ -1,5 +1,11 @@
 <?php
+# importing Model classes
 use App\Post;
+use App\User;
+use App\Countries;
+use App\Photo;
+use App\Video;
+use App\tag;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,14 +37,14 @@ Route::get('/', function () {
 //// Call to my first controller
 //Route::get('/post/{id}', 'PostController@index');
 
-// Create automatic multiple Routes using Resource- check with php artsan route:list command
-Route::resource('post', 'PostController');
-
-// Creating Route for Contact page
-Route::get('/contact', 'PostController@contact');
-
-// Post page with multiple parameters and passing data to view
-Route::get('/post/{id}/{name}/{address}', 'PostController@show_post');
+//// Create automatic multiple Routes using Resource- check with php artsan route:list command
+//Route::resource('post', 'PostController');
+//
+//// Creating Route for Contact page
+//Route::get('/contact', 'PostController@contact');
+//
+//// Post page with multiple parameters and passing data to view
+//Route::get('/post/{id}/{name}/{address}', 'PostController@show_post');
 
 /*
 |--------------------------------------------------------------------------
@@ -49,35 +55,35 @@ Route::get('/post/{id}/{name}/{address}', 'PostController@show_post');
 |
 */
 
-// insert operation
-//Route::get('/insert', function () {
-//
-//    DB::insert('insert into posts(title, content, is_admin) values(?, ?, ?)', ['Mufti e-shop', 'I am aiming to create a single eshop', 1]);
-//    DB::insert('insert into posts(title, content, is_admin) values(?, ?, ?)', ['Mufti e-mall', 'I am aiming to create online shopping mall', 1]);
-//    DB::insert('insert into posts(title, content, is_admin) values(?, ?, ?)', ['Mufti e-galleria', 'I am aiming to create another shopping mall', 1]);
-//
-//});
+ //insert operation
+Route::get('/insert', function () {
 
-// Read or select Operation
-//Route::get('/select', function () {
-//   $result = DB::select('select * from posts where id = ?', [1]);
-//   foreach ($result as $post) {
-//       return $post->content;
-//   }
-//});
+    DB::insert('insert into posts(title, content, is_admin) values(?, ?, ?)', ['Mufti e-shop', 'I am aiming to create a single eshop', 1]);
+    DB::insert('insert into posts(title, content, is_admin) values(?, ?, ?)', ['Mufti e-mall', 'I am aiming to create online shopping mall', 1]);
+    DB::insert('insert into posts(title, content, is_admin) values(?, ?, ?)', ['Mufti e-galleria', 'I am aiming to create another shopping mall', 1]);
 
-// Update operation
-//Route::get('/update', function () {
-//   $updated = DB::update('update posts set content = "Mufti e- shopping Mall" where id = ?', [3]);
-//   return $updated;
-//});
+});
 
-// Delete operation
-//Route::get('/delete', function () {
-//   $deleted = DB::delete('delete from posts where id = ?', [4]);
-//
-//   return $deleted;
-//});
+ //Read or select Operation
+Route::get('/select', function () {
+   $result = DB::select('select * from posts where id = ?', [1]);
+   foreach ($result as $post) {
+       return $post->content;
+   }
+});
+
+ //Update operation
+Route::get('/update', function () {
+   $updated = DB::update('update posts set content = "Mufti e- shopping Mall" where id = ?', [3]);
+   return $updated;
+});
+
+ //Delete operation
+Route::get('/delete', function () {
+   $deleted = DB::delete('delete from posts where id = ?', [4]);
+
+   return $deleted;
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -139,9 +145,11 @@ Route::get('/basicinsert2', function () {
 
 // Create data method, mass assignment- another way to insert data
 Route::get('/create', function (){
-    Post::create(['title'=> 'Create method',
-                   'content' => 'This row is created by using create method of laravel',
-                   'is_admin' => '1']);
+    Post::create([
+        'title'=> 'Create method',
+        'content' => 'This row is created by using create method of laravel',
+        'user_id' => 1
+        ]);
 });
 
 // update method
@@ -157,8 +165,99 @@ Route::get('/delete', function (){
 
 // another delete method
 Route::get('/delete2', function (){
-    //Post::destroy(5,7);
-    Post::where('is_admin', 1)->delete();
+    Post::destroy(5,7);
+    //Post::where('is_admin', 1)->delete();
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| Eloquent Relationship
+|--------------------------------------------------------------------------
+|
+*/
+
+// one to one relation between User table and Post table
+Route::get('/user/{id}/post', function($id) {
+   return User::find($id)->post->content;
+});
+
+//Inverse Relationship
+Route::get('/post/{id}/user', function ($id){
+   return Post::find($id)->user->name;
+});
+
+//One to many relationship
+Route::get('/user/{id}/posts', function($id) {
+   $posts =  User::find($id)->posts;    # Note here posts is used which is a new function in User Model Class
+   foreach ( $posts as $post) {
+       echo $post->content . "<br><br>";
+   }
+});
+
+//Many to Many relations
+Route::get('/user/{id}/role', function($id){
+
+    $roles = User::find($id)->roles;
+
+//    $role = User::find($id)->roles()->orderBy('id', 'desc')->get();
+//    return $role;
+//
+
+    foreach ($roles as $role){
+
+        echo $role->name;
+
+    }
+
+});
+
+//Accessing the pivot table
+
+Route::get('/user/pivot', function(){
+
+    $users = User::find(2)->roles;
+
+    foreach($users as $user) {
+
+        echo $user->pivot->created_at;
+    }
+});
+
+// Has many through relation
+Route::get('/user/country', function(){
+    $posts = Countries::find(2)->posts;
+    foreach($posts as $post){
+        echo $post->title . "<br>";
+    }
+});
+
+// Polymorphic relation
+Route::get('/user/{id}/photos', function($id){
+   $posts = Post::find($id)->photos;
+   foreach ($posts as $post) {
+       echo $post->path;
+    }
+});
+
+// inverse polymorphic
+Route::get('/photo/{id}/post', function($id) {
+   $users = Photo::find($id);
+   echo $users->imageable;
+
+});
+
+// Polymorhic many to many
+Route::get('/post/tag', function(){
+   $post = Post::find(1)->tags;
+   foreach($post as $tag){
+       echo $tag;
+   }
+});
+
+Route::get('/tag/post', function(){
+   $tag = Tag::find(2)->posts;
+   foreach($tag as $post){
+       echo $post;
+   }
+});
