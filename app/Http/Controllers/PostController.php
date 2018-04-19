@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -13,7 +15,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        return " Hi I just made my First controller in Laravel and you are viewing index method ";
+        //return " Hi I just made my First controller in Laravel and you are viewing index method ";
+
+       $posts = Post::all();
+
+       //returning to view/posts directory, file index.blade.php
+        return view('posts.index', compact('posts'));
+
     }
 
     /**
@@ -23,30 +31,43 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
+     * route = /posts
+     * We reach here as result of redirecting from html form action attribute
+     * It means $request object contains $_POST Global var methods for form INPUT feilds
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        //return $request->all();
+
+        //Creating and storing post in the database
+        Post::create($request->all());
+
+        return redirect('/posts');  // redirecting to index method, as per route:list
     }
 
     /**
      * Display the specified resource.
-     *
+     * route = /posts/{id}
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
-        return " This is Show method with an id of " . $id;
+         //return " This is Show method with an id of " . $id;
+
+        $post = Post::findOrFail($id);
+
+         return view('posts.show', compact('post'));
+
     }
 
     /**
@@ -57,8 +78,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
-        return " This is edit method of controller with an id of " .$id;
+        $post = Post::findOrFail($id);
+
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -70,7 +92,10 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
+        return redirect('/posts');   // redirecting to index method
+
     }
 
     /**
@@ -81,21 +106,23 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::whereId($id)->delete();  // single line delete operation
+
+        return redirect('/posts');        // redirect to index method
     }
 
-    /**
-     *  Contact page
-     */
-    public function contact() {
-        $family = ['Munazza', 'Mahreen', 'Imama', 'Imaan', 'Zainab'];
-        return view('contact', compact('family'));
-    }
-
-    /**
-     *  Post page
-     */
-    public function show_post($id, $name, $address) {
-        return view('post', compact('id', 'name', 'address'));
-    }
+//    /**
+//     *  Contact page
+//     */
+//    public function contact() {
+//        $family = ['Munazza', 'Mahreen', 'Imama', 'Imaan', 'Zainab'];
+//        return view('contact', compact('family'));
+//    }
+//
+//    /**
+//     *  Post page
+//     */
+//    public function show_post($id, $name, $address) {
+//        return view('post', compact('id', 'name', 'address'));
+//    }
 }
