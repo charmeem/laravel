@@ -3,7 +3,9 @@
 @section('content')
     <h2>Create a post</h2>
 
-    <form method="post" action="/posts" >
+    {{--<form method="post" action="/posts" >--}}
+
+    {!! Form::open(['method'=>'POST', 'action' =>'PostController@store']) !!}
 
         @csrf
 
