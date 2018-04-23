@@ -9,11 +9,36 @@
 
         @csrf
 
-        <input type="text" name="title" placeholder="Enter title">
+    <div class="form-group">
 
-        <input type="submit" name="Press">
+        {!! Form::label('title', 'Title:') !!}
+        {!! Form::text('title', null, ['class'=>'form-control']) !!}
 
-    </form>
+    </div>
+
+        {!! Form::submit('Enter here', ['class'=>'btn btn-primary']) !!}
+
+    {!! Form::close() !!}
+
+
+    {{--Handling errors generated from validation method used in PostController@store--}}
+    @if(count($errors) > 0)
+
+        <div class="alert alert-danger">
+
+            <ul>
+
+                @foreach($errors->all() as $error)
+
+                    <li>{{$error}}</li>
+
+                @endforeach
+
+            </ul>
+
+        </div>
+
+    @endif
 
 
 @endsection

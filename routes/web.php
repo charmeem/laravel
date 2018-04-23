@@ -267,5 +267,11 @@ Route::get('/', function () {
  * Evolving lara_cms into a CRUD Application
  */
 
-// Generates Readymade multiple CRUD routes
-Route::resource('posts', 'PostController');
+// adding group here to make $error array available to use in view file
+//middleware is for security
+Route::group(['middleware'=>'web'], function(){
+
+    // Generates Readymade multiple CRUD routes
+    Route::resource('posts', 'PostController');
+
+});

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Post;
@@ -44,9 +45,23 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //return $request->all();
+
+//    Not using following original Request class
+//    public function store(Request $request)
+
+//   Advanced validation by creating new request class
+//   - php artisan make:request CreatePostRequest
+
+    public function store ( CreatePostRequest $request)
+
+     {
+//        //  Old validation style
+//         // Validating before storing
+//        $this->validate($request, [
+//             'title'=>'required',     //These are validating rules
+//             //'content'=>'required'
+//        ]);
+
 
         //Creating and storing post in the database
         Post::create($request->all());
