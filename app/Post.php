@@ -28,6 +28,15 @@ class Post extends Model
 // Polymorphic - Mamny to many
     public function tags() {
         return $this->morphToMany('App\Tag', 'taggable');
-}
+    }
+
+/** Examples of Query scope menipulation
+ * Simplifying the long command line in index method of postcontroller
+ *   See corresponding code in postcontroller index method
+ */
+    public function scopeLatest($query) {      // latest will be alias used in index method
+        return $query->orderBy('id', 'asc')->get();
+    }
+
 
 }

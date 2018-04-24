@@ -6,11 +6,10 @@
 
     {{--more Secure against sql injection--}}
     {!! Form::model($post, ['method'=>'PATCH', 'action'=>['PostController@update', $post->id]]) !!}
-
     {{--<form method="post" action="/posts/{{ $post->id }}" >--}}
 
         <!--csrf token-->
-        {{--@csrf--}}
+        @csrf
 
         {{--<!--Way to send PUT method to edit method of controller-->--}}
         {{--<input type="hidden" name="_method" value="PUT">--}}

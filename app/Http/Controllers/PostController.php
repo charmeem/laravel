@@ -16,12 +16,20 @@ class PostController extends Controller
      */
     public function index()
     {
-        //return " Hi I just made my First controller in Laravel and you are viewing index method ";
 
-       $posts = Post::all();
+//       $posts = Post::all();
+//       //returning to view/posts directory, file index.blade.php
+//        return view('posts.index', compact('posts'));
 
-       //returning to view/posts directory, file index.blade.php
+        /**
+         * examples of Query scope manipulation
+         * We will make following query simple by adding alias type in Post.php file
+         */
+        //$posts = Post::orderBy('id', 'des')->get();   // long command line
+        $posts = Post::latest();   // short command line
+        //returning to view/posts directory, file index.blade.php
         return view('posts.index', compact('posts'));
+
 
     }
 
@@ -49,7 +57,7 @@ class PostController extends Controller
 //    Not using following original Request class
 //    public function store(Request $request)
 
-//   Advanced validation by creating new request class
+//   Advanced validation is used here by creating new request class
 //   - php artisan make:request CreatePostRequest
 
     public function store ( CreatePostRequest $request)

@@ -59,4 +59,27 @@ class User extends Authenticatable
     public function photos() {
         return $this->morphMany('App\Photo', 'imageable');
     }
+
+
+
+    /**
+     *  Accesser method
+     *  Menioulating output before Reading, see corresponding function in router
+     */
+    public function getNameAttribute($value) {   //get name column attribute
+        return strtoupper($value);
+    }
+
+    public function getEmailAttribute($value) {   //get email column attribute
+        return strtoupper($value);
+    }
+
+    /**
+     *  Mutator method
+     *  Menipulating output before Storing, see corresponding function in router
+     */
+    public function setNameAttribute($value) {   //set name column attribute
+        $this->attributes['name'] = strtoupper($value);
+    }
+
 }

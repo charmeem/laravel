@@ -6,7 +6,7 @@ use App\Countries;
 use App\Photo;
 use App\Video;
 use App\tag;
-
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -274,4 +274,49 @@ Route::group(['middleware'=>'web'], function(){
     // Generates Readymade multiple CRUD routes
     Route::resource('posts', 'PostController');
 
+});
+
+
+/**
+ *   Date Functionalities
+ */
+Route::get('/dates', function (){
+   $date = new DateTime('+2 months');
+   echo $date->format('m-d-Y');
+
+   echo '<br>';
+
+   echo Carbon::now();
+
+    echo '<br>';
+
+    echo Carbon::now()->dayOfWeek;
+
+    echo '<br>';
+
+    echo Carbon::now()->diffForHumans();
+
+});
+
+/**
+ * Accessors
+ * Changing the value before reading
+ * See the corresponding Accessor function in User Model class
+ */
+Route::get('/getname', function (){
+   $name = User::find(1);
+   echo $name->name;
+   echo '<br>';
+    echo $name->email;
+});
+
+/**
+ *  Mutators
+ *  Changing the value before storing
+ * See the corresponding mutator function in User Model class
+ */
+Route::get('/setname', function(){
+   $name = User::find(1);
+   $name->name='mona';
+   $name->save();
 });
