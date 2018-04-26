@@ -26,7 +26,7 @@ class PostController extends Controller
          * We will make following query simple by adding alias type in Post.php file
          */
         //$posts = Post::orderBy('id', 'des')->get();   // long command line
-        $posts = Post::latest();   // short command line
+        $posts = Post::latest();   // short command line using Query scope
         //returning to view/posts directory, file index.blade.php
         return view('posts.index', compact('posts'));
 
@@ -63,6 +63,33 @@ class PostController extends Controller
     public function store ( CreatePostRequest $request)
 
      {
+         /* Storing  files in Database
+          *
+          * create view file that incorporate files field in Form
+          */
+
+          $input = $request->all();             // copying input object
+          if($file=$request->file('file')){  // if file is included in the object
+              $name = $file->getClientOriginalName();
+              $file->move('image', $name);  // moving file to image directory in public directory
+              $input['path'] = $name;               // Assigning file name in path column
+          }
+          Post::create($input);    // Add or create data in the database
+
+
+
+//         /* Testing files functionality */
+//
+//         $file = $request->file('file');
+//
+//         echo '<br>';
+//         echo $file->getClientOriginalName();
+//
+//        echo '<br>';
+//        echo $file->getClientSize();
+
+
+
 //        //  Old validation style
 //         // Validating before storing
 //        $this->validate($request, [
@@ -71,10 +98,10 @@ class PostController extends Controller
 //        ]);
 
 
-        //Creating and storing post in the database
-        Post::create($request->all());
-
-        return redirect('/posts');  // redirecting to index method, as per route:list
+//        //Creating and storing post in the database
+//        Post::create($request->all());
+//
+//        return redirect('/posts');  // redirecting to index method, as per route:list
     }
 
     /**

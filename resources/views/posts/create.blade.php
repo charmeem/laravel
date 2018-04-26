@@ -5,18 +5,25 @@
 
     {{--<form method="post" action="/posts" >--}}
 
-    {!! Form::open(['method'=>'POST', 'action' =>'PostController@store']) !!}
+    {{--{!! Form::open(['method'=>'POST', 'action' =>'PostController@store']) !!}--}}
+    {!! Form::open(['method'=>'POST', 'action' =>'PostController@store', 'files'=>true]) !!}
+    {{--adding file input capability --}}
 
         @csrf
 
+    {{--Input Text field--}}
     <div class="form-group">
-
         {!! Form::label('title', 'Title:') !!}
         {!! Form::text('title', null, ['class'=>'form-control']) !!}
-
     </div>
 
-        {!! Form::submit('Enter here', ['class'=>'btn btn-primary']) !!}
+    {{--Adding file input field in the form--}}
+    <div class="form-group">
+        {!! Form::file('file', ['class'=>'form-control']) !!}
+    </div>
+
+    {{--Submit button--}}
+    {!! Form::submit('Enter here', ['class'=>'btn btn-primary']) !!}
 
     {!! Form::close() !!}
 
