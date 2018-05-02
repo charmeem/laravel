@@ -17,12 +17,42 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Sessions learning
      *
-     * @return \Illuminate\Http\Response
+     * Creating, reading, deleting and updating
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+//       // Creating session
+//
+//            // method-1
+//            $request->session()->put(['mufti'=>'Master Engineer']);
+//
+//            //method-2
+//            session(['mona'=>'Mufti Wife']);
+//
+//            return view('home');
+
+
+        //Reading Sessions
+
+            //method-1
+//            return $request->session()->all();
+
+            //method-2
+//           return $request->session()->get('mufti');
+
+            //method-3
+//            return session('mona');
+
+        //Deleting Session
+
+           //method-1
+//           $request->session()->forget('mona');
+
+           //method-2  delete all
+//           $request->session()->flush();
+//
+//        return $request->session()->all();
     }
 }
