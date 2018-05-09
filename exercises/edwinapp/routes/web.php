@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+/**
+ * Routes added for admin, users
+ */
+
+// creating controller through php artisan make:controller --resource AdminUsersController
+Route::resource('admin/users', 'AdminUsersController');
+
+// Admin Main Page route
+Route::get('/admin', function (){
+   return view('admin.index');
+});
