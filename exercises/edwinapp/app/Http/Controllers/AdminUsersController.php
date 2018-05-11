@@ -39,7 +39,7 @@ class AdminUsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request->all();
     }
 
     /**
