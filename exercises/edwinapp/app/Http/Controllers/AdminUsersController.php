@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersRequest;
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
+use App\Http\Requests;
 class AdminUsersController extends Controller
 {
     /**
@@ -28,18 +31,27 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-       return view('admin.users.create');
+       // fetching roles from Role model
+       $roles = Role::pluck('name','id')->all();
+       return view('admin.users.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Triggers when submit button pressed, see create view file
+     *
+     * UsersRequest is for Validation created in Http/Request directory
      */
-    public function store(Request $request)
+
+    public function store(UsersRequest $request)
     {
-        return $request->all();
+        // inserting data in the database
+        User::create($request->all());
+
+        return redirect('admin/users');
+
+        //return $request->all();
     }
 
     /**
