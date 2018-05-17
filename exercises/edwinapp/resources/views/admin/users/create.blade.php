@@ -5,7 +5,7 @@
 <h1>Create Users</h1>
 
 {{--more Secure against sql injection--}}
-{{--files=>true for including enctype file upload feature in form--}}
+{{--files=>true for including enctype file to enable upload feature in form--}}
 {!! Form::open(['method'=>'POST', 'action'=>'AdminUsersController@store', 'files'=>true]) !!}
 {{--<form method="post" action="/posts/{{ $post->id }}" >--}}
 
@@ -39,8 +39,8 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('file', 'Title:') !!}
-    {!! Form::file('file', ['class'=>'form-control']) !!}
+    {!! Form::label('photo_id', 'Photo:') !!}
+    {!! Form::file('photo_id', ['class'=>'form-control']) !!}
     {{--<input type="text" name="title" placeholder="Enter title" value="{{ $post->title }}">--}}
 </div>
 

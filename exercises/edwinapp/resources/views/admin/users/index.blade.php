@@ -7,6 +7,7 @@
         <thead>
           <tr>
             <th>Id</th>
+            <th>Photo</th>
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
@@ -17,10 +18,17 @@
         </thead>
         <tbody>
 
+        <!--$users var comes from AdminUsersController@index -->
         @if($users)
           @foreach($users as $user)
             <tr>
             <td>{{$user->id}}</td>
+
+            <!--photo below is User Model function that connect USer table to Photo table-->
+            <!-- Checking if user has photo attached to avoid error -->
+            <!--USing Accessor in Photo model to append images directory -->
+            <!--<td><img height="50" width="50" src="/images/{{$user->photo ? $user->photo->file: "User has no photo"}}" alt=""></td> -->
+            <td><img height="50" width="50" src="{{$user->photo ? $user->photo->file: "User has no photo"}}" alt=""></td>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->role->name}}</td>

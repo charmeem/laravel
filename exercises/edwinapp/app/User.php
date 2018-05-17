@@ -33,4 +33,11 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role');
     }
+
+    /**
+     * creating relation with Photo Table
+     */
+    public function photo(){
+        return $this->belongsTo('App\Photo');
+    }
 }
