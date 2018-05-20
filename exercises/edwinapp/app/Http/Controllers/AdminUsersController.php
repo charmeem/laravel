@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersRequest;
+use App\Http\Requests\UsersEditRequest;
 use App\Photo;
 use App\Role;
 use App\User;
@@ -43,6 +44,7 @@ class AdminUsersController extends Controller
      * Triggers when submit button pressed, see create view file
      *
      * UsersRequest is for Validation created in Http/Request directory
+     *
      */
 
     public function store(UsersRequest $request)
@@ -58,8 +60,16 @@ class AdminUsersController extends Controller
 //            return 'Photo exists';
 //        }
 
+        if(trim($request->password)== ''){
+            //copying Form data except password
+            $input = $request->except('password');
+    } else {
         //Copying Form data to input variable
         $input = $request->all();
+    }
+
+
+
         //var_dump($input);
         // if file is attached in the form
         if($file=$request->file('photo_id')) {
@@ -106,19 +116,46 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.users.edit');
+        $user=User::findOrFail($id);
+        $roles=Role::pluck('name', 'id')->all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *
+     * Using separate Request file to skip Password validation in Edit section
+     *
      */
-    public function update(Request $request, $id)
+    public function update(UsersEditRequest $request, $id)
     {
-        //
+        // To update a record in a table we need its id, whereas create doesnot needs any
+        $user = User::findOrFail($id);
+
+        if(trim($request->password)== ''){
+            //copying Form data except password
+            $input = $request->except('password');
+        } else {
+            //Copying Form data to input variable
+            $input = $request->all();
+        }
+
+        // create and save photo record if attached
+        if($file = $request->file('photo_id')) {
+            $name=time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo=Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+
+        // Encrypt password
+        $input['password'] = bcrypt($request->password);
+
+        $user->update($input);
+
+        return redirect('admin/users');
     }
 
     /**

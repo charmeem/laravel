@@ -28,8 +28,8 @@
             <!-- Checking if user has photo attached to avoid error -->
             <!--USing Accessor in Photo model to append images directory -->
             <!--<td><img height="50" width="50" src="/images/{{$user->photo ? $user->photo->file: "User has no photo"}}" alt=""></td> -->
-            <td><img height="50" width="50" src="{{$user->photo ? $user->photo->file: "User has no photo"}}" alt=""></td>
-            <td>{{$user->name}}</td>
+            <td><img height="50" width="50" src="{{$user->photo ? $user->photo->file: "http://placehold.it/400x400"}}" alt=""></td>
+            <td><a href="{{route('users.edit', $user->id)}}" >{{$user->name}}</a></td>
             <td>{{$user->email}}</td>
             <td>{{$user->role->name}}</td>
             <td>{{$user->is_active==1?'Active':'Not Active'}}</td>
