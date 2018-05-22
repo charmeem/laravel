@@ -6,16 +6,16 @@
 //// Fonts
 //@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 //
-//// Variables
-//@import "variables";
+// Variables
+@import "variables";
 //
-//// Bootstrap
+// Bootstrap
 //@import '~bootstrap/scss/bootstrap';
-//
-//.navbar-laravel {
-//  background-color: #fff;
-//  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-//}
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
 
 
 /**
@@ -23,9 +23,10 @@
  *
  * Note: After changes dont forget to run: npm run production
  *
-  *The compiled css data will go to the file: public/css/app.css
- *
+ * The compiled css data will go to the file: public/css/app.css
+ * See webpack.mix.js file
  */
 #admin-page{
   padding-top:0px;
 }
+
