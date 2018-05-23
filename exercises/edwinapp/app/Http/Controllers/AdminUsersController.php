@@ -10,6 +10,8 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
+
 class AdminUsersController extends Controller
 {
     /**
@@ -64,35 +66,39 @@ class AdminUsersController extends Controller
             //copying Form data except password
             $input = $request->except('password');
     } else {
-        //Copying Form data to input variable
+        //Copying Form data to input variable array
         $input = $request->all();
     }
 
-
-
         //var_dump($input);
+
         // if file is attached in the form
         if($file=$request->file('photo_id')) {
+
             //append image file name with timestamp
             $name = time() . $file->getClientOriginalName();
+
             //move file to images directory and create if not exists
             $file->move('images', $name);
+
             //Insert file name in Photo table
             $photo = Photo::create(['file'=>$name]);
+
             //Copying received id from Photo table to $input vaiable
             $input['photo_id'] = $photo->id;
         }
         //and - else
+
             // Encrypt password
             $input['password'] = bcrypt($request->password);
+
             // store User data in User Table
             User::create($input);
 
+        //Display message once user is created also see index view file
+        Session::flash('created_user', $input['name'] . ' has been created succesfully');
+
         return redirect('admin/users');
-
-
-
-
 
         //return $request->all();
     }
@@ -155,6 +161,9 @@ class AdminUsersController extends Controller
 
         $user->update($input);
 
+        //Display message once user is updated also see index view file
+        Session::flash('edited_user', $input['name'] . ' has been updated succesfully');
+
         return redirect('admin/users');
     }
 
@@ -166,6 +175,23 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user=User::findOrFail($id);
+
+        // Make photo deleted from images directory
+        if ($user->photo) {
+            unlink(public_path() . $user->photo->file);
+        }
+
+        //delete the user from users table
+        $user->delete();
+
+        // also delete users photo from photo table
+        $user->photo ? $user->photo->delete():'tuntun';
+
+
+        //Add message once user is deleted also see index view file
+        Session::flash('deleted_user', $user->name . ' has been deleted');
+
+        return redirect('admin/users');
     }
 }

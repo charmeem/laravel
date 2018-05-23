@@ -61,18 +61,31 @@
             </div>
 
             <div class="form-group">
-                {!! Form::submit('Update Post', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Update User', ['class'=>'btn btn-primary col-sm-6']) !!}
                 {{--<input type="submit" name="update" value="Update">--}}
             </div>
-    </div>
+            {!! Form::close() !!}
+
+
+            {{--Adding delete form--}}
+
+            {!! Form::model($user, ['method'=>'DELETE', 'action'=>['AdminUsersController@destroy',$user->id]]) !!}
+
+            <div class="form-group">
+                {!! Form::submit('Delete User', ['class'=>'btn btn-danger col-sm-6']) !!}
+                {{--<input type="submit" name="update" value="Update">--}}
+            </div>
+
+            {!! Form::close() !!}
+
+        </div>
 
     </div>
 
-    <div class="row"></div>
+    <div class="row">
         <!-- Errors Handling in seperate file in view/includes -->
         @include('includes.form-error')
     </div>
-    {!! Form::close() !!}
-    {{--</form>--}}
+
 
 @stop

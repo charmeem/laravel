@@ -17,6 +17,9 @@ class CreatePhotosTable extends Migration
             $table->increments('id');
             $table->string('file');
             $table->timestamps();
+
+            // Deleting relationship with the user
+            //$table->foreign('id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

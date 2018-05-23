@@ -1,6 +1,18 @@
 @extends ('layouts.admin')
 
 @section('content')
+    {{--Adding deleted user message, also see AdminUsersController@destroy--}}
+    @if(Session::has('deleted_user'))
+        <p class="bg-danger">{{session('deleted_user')}} </p>
+    @endif
+
+    @if(Session::has('created_user'))
+        <p class="bg-danger">{{session('created_user')}}</p>
+    @endif
+
+    @if(Session::has('edited_user'))
+        <p class="bg-danger">{{session('edited_user')}} </p>
+    @endif
 
     <h1>Users</h1>
     <table class="table table-hover">

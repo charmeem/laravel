@@ -44,10 +44,12 @@
 
         <ul class="nav navbar-top-links navbar-right">
 
-            <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i>
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
+
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ route('logout') }}"

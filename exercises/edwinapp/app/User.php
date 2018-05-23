@@ -45,7 +45,7 @@ class User extends Authenticatable
      *  Used for Security in collaboration with middleware
      */
     public function isAdmin() {
-        if($this->role->name == "administrator"){
+        if($this->role->name == "administrator" && $this->is_active==1){
             return true;
         }
         return false;
