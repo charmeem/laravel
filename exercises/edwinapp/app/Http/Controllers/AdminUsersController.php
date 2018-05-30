@@ -70,15 +70,13 @@ class AdminUsersController extends Controller
         $input = $request->all();
     }
 
-        //var_dump($input);
-
         // if file is attached in the form
         if($file=$request->file('photo_id')) {
 
             //append image file name with timestamp
             $name = time() . $file->getClientOriginalName();
 
-            //move file to images directory and create if not exists
+            //move file to public/images directory and create if not exists
             $file->move('images', $name);
 
             //Insert file name in Photo table

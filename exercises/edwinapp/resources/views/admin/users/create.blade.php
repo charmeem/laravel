@@ -51,7 +51,7 @@
         </div>
 
         <div class="form-group">
-        {!! Form::submit('Create Post', ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Create User', ['class'=>'btn btn-primary']) !!}
         {{--<input type="submit" name="update" value="Update">--}}
         </div>
 

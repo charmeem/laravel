@@ -42,10 +42,10 @@
         </div>
         <!-- /.navbar-header -->
 
-        <ul class="nav navbar-top-links navbar-right">
+        <ul class="nav navbar-top-links navbar-right navbar-nav ml-auto">
 
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false" v-pre>
                     <i class="fa fa-user fa-fw"></i>
                     {{ Auth::user()->name }} <span class="caret"></span>
                 </a>
@@ -54,7 +54,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
-                       document.getElementById('logout-form').submit();">
+                           document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
 
@@ -103,10 +103,10 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">All Posts</a>
+                                <a href="{{route('posts.index')}}">All Posts</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Create Post</a>
+                                <a href="{{route('posts.create')}}">Create Post</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

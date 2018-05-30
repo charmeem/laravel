@@ -45,10 +45,8 @@ Route::group(['middleware'=>'admin'], function (){
 
     //  creating controller through php artisan make:controller --resource AdminUsersController
     Route::resource('admin/users', 'AdminUsersController');
-
+    // Adding Post section for Admin only. create controller through artisan command
+    Route::resource('admin/posts', 'AdminPostsController');
 });
 
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
