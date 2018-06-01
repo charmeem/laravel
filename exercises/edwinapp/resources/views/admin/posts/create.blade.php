@@ -30,7 +30,7 @@
 
     <div class="form-group">
         {!! Form::label('category_id', 'Category:') !!}
-        {!! Form::select('category_id', array(1=>'Laravel', 2=>'React-Native'),null, ['class'=>'form-control']) !!}
+        {!! Form::select('category_id', [''=>'Choose category'] + $categories ,null, ['class'=>'form-control']) !!}
         {{--<input type="text" name="title" placeholder="Enter title" value="{{ $post->title }}">--}}
     </div>
 
