@@ -180,11 +180,28 @@ class AdminUsersController extends Controller
             unlink(public_path() . $user->photo->file);
         }
 
+
+        // also delete relation between user and  photo
+        $user->photo ? $user->photo->delete():'tuntun';
+
+        // Delete related posts and post photos of the user if any
+        if($user->posts){
+            foreach($user->posts as $user->post){
+
+                // deleting and unlinking photos of the posts of the user
+                $user->post->photo->delete();
+                unlink(public_path() . $user->post->photo->file);
+
+
+                $user->post->delete();
+
+
+            }
+        }
+
         //delete the user from users table
         $user->delete();
 
-        // also delete users photo from photo table
-        $user->photo ? $user->photo->delete():'tuntun';
 
 
         //Add message once user is deleted also see index view file

@@ -138,6 +138,20 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $post = Post::findOrFail($id);
+
+       // if posts has photo object associated with , remove it from public directory
+       if($post->photo) {
+           unlink(public_path() . $post->photo->file);
+       }
+
+       // Delete related photo of the post if any
+        $post->photo ? $post->photo->delete(): 'no photo exists';
+
+
+       // delete post record
+        $post->delete();
+
+        return redirect('admin/posts');
     }
 }

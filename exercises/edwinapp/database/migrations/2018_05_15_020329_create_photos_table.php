@@ -18,8 +18,8 @@ class CreatePhotosTable extends Migration
             $table->string('file');
             $table->timestamps();
 
-            // Deleting relationship with the user
-            //$table->foreign('id')->references('id')->on('users')->onDelete('cascade');
+            //when deleting post its related photo will be deleted as well
+            //$table->foreign('id')->references('id')->on('post')->onDelete('cascade');
         });
     }
 
